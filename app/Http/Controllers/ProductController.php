@@ -2,45 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Http\Controllers\Traits\TemplateViews;
-use App\Http\Requests;
 use App\Http\Requests\SearchRequest;
-use App\Category;
-use App\Seo;
-use App\Product;
+use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-	use TemplateViews;
+    use TemplateViews;
 
     public function category($categoryAlias, Request $request)
     {
-    	$seo = $this->findSeo($categoryAlias);
-    	if($seo == null){
-    		abort(404);
-    	}
-    	$category = $seo->category;
-    	$products = Product::where('categoryid', $category->id)->paginate(20)->setPath($request->getUri());
-    	return $this->view('app.product.by_category', [
-    		'category' 	=> $category,
-    		'products' 	=> $products
-    	]);
+        $seo = $this->findSeo($categoryAlias);
+        if ($seo == null) {
+            abort(404);
+        }
+        $category = $seo->category;
+        $products = Product::where('categoryid', $category->id)->paginate(20)->setPath($request->getUri());
+        return $this->view('app.product.by_category', [
+            'category' => $category,
+            'products' => $products,
+        ]);
     }
 
     public function detail($categoryAlias, $productAlias)
     {
         $seoCategory = $this->findSeo($categoryAlias);
-        $seoProduct  = $this->findSeo($productAlias);
-        if($seoCategory == null || $seoProduct == null){
+        $seoProduct = $this->findSeo($productAlias);
+        if ($seoCategory == null || $seoProduct == null) {
             abort(404);
         }
         $product = $seoProduct->product;
         $product->viewed++;
         $product->save();
-    	return $this->view('app.product.detail', [
-            'product' => $product
+        return $this->view('app.product.detail', [
+            'product' => $product,
         ]);
     }
 
@@ -49,7 +45,7 @@ class ProductController extends Controller
         $products = Product::where('mark', MARK_NEW)->paginate(20)->setPath($request->getUri());
         return $this->view('app.product.new', [
             'title' => 'Sản phẩm mới',
-            'products' => $products
+            'products' => $products,
         ]);
     }
 
@@ -58,7 +54,7 @@ class ProductController extends Controller
         $products = Product::where('mark', MARK_FEATURED)->paginate(20)->setPath($request->getUri());
         return $this->view('app.product.new', [
             'title' => 'Sản phẩm nổi bật',
-            'products' => $products
+            'products' => $products,
         ]);
     }
 
@@ -66,11 +62,11 @@ class ProductController extends Controller
     {
         $key = $request->input('q');
         $products = Product::where('name', 'like', "%{$key}%")
-                            ->paginate(20)
-                            ->setPath($request->getUri());
+            ->paginate(20)
+            ->setPath($request->getUri());
         return $this->view('app.product.search', [
-            'products'  => $products,
-            'key'       => $key
+            'products' => $products,
+            'key' => $key,
         ]);
     }
 }

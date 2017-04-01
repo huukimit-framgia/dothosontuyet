@@ -1,26 +1,26 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
     protected $table = 'orders';
+    protected $fillable = ['userid', 'customerid', 'total', 'amount', 'payment', 'paymentinfo', 'status'];
 
-    protected $fillable = [
-        'userid', 'customerid', 'total', 'amount', 'payment', 'paymentinfo', 'status'
-    ];
-
-    public function orderDetails(){
+    public function orderDetails()
+    {
         return $this->hasMany(OrderDetail::class, 'orderid');
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class, 'userid');
     }
 
-    public function customer(){
+    public function customer()
+    {
         return $this->belongsTo(Customer::class, 'customerid');
     }
 }

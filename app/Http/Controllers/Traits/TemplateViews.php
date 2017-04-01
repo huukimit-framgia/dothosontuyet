@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Traits;
 
-use App\Category;
-use App\Product;
-use App\Seo;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Seo;
 
 trait TemplateViews
 {

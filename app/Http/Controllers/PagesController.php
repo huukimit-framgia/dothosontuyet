@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Traits\TemplateViews;
-use App\Product;
+use App\Models\Product;
 
 class PagesController extends Controller
 {

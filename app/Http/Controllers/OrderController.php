@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Traits\TemplateViews;
-use Illuminate\Http\Request;
-use Auth;
-use App\Order;
-use App\OrderDetail;
-
-use App\Http\Requests;
 use App\Http\Requests\CustomerFormRequest;
+use App\Models\Order;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -32,7 +29,6 @@ class OrderController extends Controller
                 'total' => 0,
                 'amount' => 0,
             ]);
-
         } else {
             return 'Thieu thong tin tai khoan';
         }

@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-use Lang;
+use Illuminate\Support\Facades\Lang;
 
 class SearchRequest extends Request
 {
@@ -25,7 +24,7 @@ class SearchRequest extends Request
     public function rules()
     {
         return [
-            'q' => 'required'
+            'q' => 'required',
         ];
     }
 
@@ -33,8 +32,8 @@ class SearchRequest extends Request
     {
         return [
             'q.required' => Lang::has('search.key_required')
-                                ? Lang::get('search.key_required')
-                                : 'Vui lòng nhập từ khóa tìm kiếm'
+                ? Lang::get('search.key_required')
+                : 'Vui lòng nhập từ khóa tìm kiếm',
         ];
     }
 }
